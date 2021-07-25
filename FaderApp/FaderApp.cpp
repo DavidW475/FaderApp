@@ -237,12 +237,10 @@ int main()
     SerialPort* arduino;
     arduino = new SerialPort(portName);
     std::cout << "Is connected: " << arduino->isConnected() << std::endl;
-    //Sleep(1500);
     
     while (true) {
         char rec[1];
         arduino->readSerialPort(rec, 1);
-        //std::cout << rec[0] << std::endl;
         while (rec[0] != 'b') {
             arduino->readSerialPort(rec, 1);
             Sleep(50);
@@ -280,70 +278,6 @@ int main()
             setVolume(vol);
             std::cout << (int)rec[0] << '\n';
         }
-        /*volume = (int)(getVolume() * 100);
-        std::string send;
-        send.append(std::to_string(volume));
-        send.append(";");
-        std::cout << send;
-        const char* sendString = send.c_str();
-        arduino->writeSerialPort(sendString, send.length());
-        Sleep(500);*/
-
-
-    }
-    
-
-    /*while (true) {
-        float val = getVolume();
-        sendSerial(val, isMute(), currentAppName, arduino);
-
-        char rec[1];
-        for (int i = 0; i < 20; i++) {
-            arduino->readSerialPort(rec, i);
-            if (rec[0] == 'v') {
-                break;
-            }
-        }
-        char receivedString[4];
-        int hasRead = arduino->readSerialPort(receivedString, 4);
-        int recVal = (int)receivedString[1];
-        if (hasRead) std::cout << receivedString << "\n";
-        int next = receivedString[2] - 48;
-        int switchMute = receivedString[3] - 48;
-        if (next == 1) {
-            selected++;
-            if (selected >= getSessionCount()) {
-                selected = 0;
-            }
-            setNewApp();
-            std::cout << "\n";
-            std::cout << selected;
-            printf("%s", currentAppName);
-            std::cout << "\n\n";
-            printNames();
-        }
-        if (next == 2) {
-            selected--;
-            if (selected <= -1) {
-                selected = getSessionCount() - 1;
-            }
-            setNewApp();
-            std::cout << "\n";
-            std::cout << selected;
-            printf("%s", currentAppName);
-            std::cout << "\n\n";
-            printNames();
-        }
-
-        if (switchMute == 1) {
-            toggleMute();
-        }
-       //if(!hasRead) std::cerr << "Error occured reading data" << "\n";
-       else {
-           float vol = ((float)recVal / 100);
-           setVolume(vol);
-       }
-       Sleep(500);
-    }*/
+    }   
 }
 
